@@ -5,11 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 
-int main (int arg, char **argv)
-{
-    //load config files
-}
-
 //functions for lsh
 void lsh_loop(void)
 {
@@ -18,7 +13,7 @@ void lsh_loop(void)
     int status;
 
     do {
-        printf(">");
+        printf("> ");
         line = lsh_read_line();
         args = lsh_split_line(line);
         status = lsh_execute(args);
@@ -61,7 +56,7 @@ char *lsh_read_line(void)
             buffer = realloc(buffer, bufsize);
 
             if (!buffer) {
-                fprintf(stderr, "lsh: allocation error\n"):
+                fprintf(stderr, "lsh: allocation error\n");
                 exit(EXIT_FAILURE);
             }
         }
@@ -174,12 +169,33 @@ int lsh_help(char **args) {
 
 int lsh_exit(char **args) { return 0; }
 
-//run command loop
-lsh_loop();
+int lsh_execute(char **args)
+{
+    int i;
 
-//perform shutdown
-return EXIT_SUCCESS;
+    if (args[0] == NULL) {
+        //empty command entered
+        return 1;
+    }
 
+    for (i = 0; i < lsh_num_builtins(); i++) {
+        if (strcmp(args[0], builtin_str[i]) == 0) {
+            return (*builtin_func[i])(args);
+        }
+    }
+    //if (args[0] == "\n") {return 1;}
+    return lsh_launch(args);
+}
+
+int main (int arg, char **argv)
+{
+    //run command loop
+    lsh_loop();
+
+    //perform shutdown
+    return EXIT_SUCCESS;
+    
+}
 
 /*
 It’s easy to view yourself as “not a real programmer.” There are programs out there that everyone uses, 
