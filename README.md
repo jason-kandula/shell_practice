@@ -1,2 +1,2 @@
-#Simple Unix Shell - made in scratch from C
+# Simple Unix Shell - made in scratch from C
 "It’s easy to view yourself as “not a real programmer.” There are programs out there that everyone uses, and it’s easy to put their developers on a pedestal. Although developing large software projects isn’t easy, many times the basic idea of that software is quite simple. Implementing it yourself is a fun way to show that you have what it takes to be a real programmer."
